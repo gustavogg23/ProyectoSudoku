@@ -22,7 +22,7 @@ BEGIN
 	for i:= 1 to 9 do
 	begin
 		for j:= 1 to 9 do
-			write(tablero[i, j], ' ');
+			write('|', tablero[i, j], '|');
 		writeln();
 	end;
 END.
