@@ -5,7 +5,7 @@ type
 	matriz = array [1..9, 1..9] of integer;
 var 
 	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: matriz;
-	i, j: integer;
+	i, j, fila, columna, elegirTablero: integer;
 	
 procedure llenarTablerosResueltos;
 begin
@@ -468,29 +468,99 @@ begin
 		end;
 end;
 
+function pedirPosicion: boolean;
+var
+	fil, col, error: integer;
+	nroEntrada: string;
+begin
+	repeat
+		write('Por favor ingrese la fila (1-9): ');
+		readln(nroEntrada);
+		Val(nroEntrada, fil, error);
+		if (error <> 0) then
+		begin
+			writeln('Entrada invalida, por favor ingrese un numero valido.');
+			pedirPosicion:= false;
+		end;
+		write('Por favor ingrese la columna (1-9): ');
+		readln(nroEntrada);
+		Val(nroEntrada, col, error);
+		if (error <> 0) then
+		begin
+			writeln('Entrada invalida, por favor ingrese un numero valido.');
+			pedirPosicion:= false;
+		end;
+		if ((fil >= 1) and (fil <= 9)) and ((col >= 1) and (col <= 9)) then
+		begin
+			if (tableroUsuario[fil, col] <> 0) then
+			begin
+				writeln('La posicion ingresada ya contiene una pista y no puede ser modificada, por favor ingrese una posicion diferentes.');
+				pedirPosicion:= false;
+			end
+			else
+			begin
+				fila:= fil;
+				columna:= col;
+				pedirPosicion:= true;
+			end;
+		end
+		else
+		begin
+			writeln('La fila y la columna ingresada debe estar entre 1 y 9, por favor ingrese una opcion valida.');
+			pedirPosicion:= false;
+		end;	
+	until pedirPosicion;
+end;
+
 BEGIN
+	randomize;
 	while true do
 	begin
 		llenarTablerosResueltos;
-		writeln('Mostrando tablero...');
-		writeln();
-		writeln('-----------------------');
-		for i:= 1 to 9 do
-		begin
-			write('| ');
-			for j:= 1 to 9 do
-			begin
-				write(tableroRes1[i, j], ' ');
-				if (j mod 3 = 0) then
-					write('|');
-			end;
+		elegirTablero:= random(5) + 1;
+		case elegirTablero of
+		1: begin
+			Clrscr;
+			crearPistas(tableroRes1);
+			imprimirTableroUsuario(tableroUsuario);
 			writeln();
-			if (i mod 3 = 0) then
-				writeln('-----------------------');
+			pedirPosicion;
+			exit;
 		end;
-		crearPistas(tableroRes1);
-		imprimirTableroUsuario(tableroUsuario);
-		exit;
+		2: begin
+			Clrscr;
+			crearPistas(tableroRes2);
+			imprimirTableroUsuario(tableroUsuario);
+			writeln();
+			pedirPosicion;
+			exit;
+		end;
+		3: begin
+			Clrscr;
+			crearPistas(tableroRes3);
+			imprimirTableroUsuario(tableroUsuario);
+			writeln();
+			pedirPosicion;
+			exit;
+		end;
+		4: begin
+			Clrscr;
+			crearPistas(tableroRes4);
+			imprimirTableroUsuario(tableroUsuario);
+			writeln();
+			pedirPosicion;
+			exit;
+		end;
+		5: begin
+			Clrscr;
+			crearPistas(tableroRes5);
+			imprimirTableroUsuario(tableroUsuario);
+			writeln();
+			pedirPosicion;
+			exit;
+		end;
+		end;
 	end;
+	
 END.
 
