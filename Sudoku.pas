@@ -91,21 +91,21 @@ begin
 	tableroRes[9, 9]:= 4;
 end;
 
-procedure crearPistas;
+procedure crearPistas; // Procedimiento que crea las pistas mostradas al usuario
 var
 	i, j, k: integer;
 begin
-	for i:= 1 to 9 do
+	for i:= 1 to 9 do  // Bucle anidado que copia los valores del tablero resuleto al tablero del usuario
 		for j:= 1 to 9 do
 			tableroUsuario[i, j]:= tableroRes[i, j];
 			
-	for k:= 1 to 64 do
+	for k:= 1 to 64 do  // Bucle que se repite 64 veces
 	begin
 		repeat
-			i:= random(9) + 1;
-			j:= random(9) + 1;
-		until (tableroUsuario[i, j] <> 0);
-		tableroUsuario[i, j];
+			i:= random(9) + 1; // Selecciona una fila aleatoria 
+			j:= random(9) + 1; // Selecciona una columan aleatoria 
+		until (tableroUsuario[i, j] <> 0); // Sigue repitiendo este proceso hasta que no queden celdas sin 0
+		tableroUsuario[i, j]:= 0; // Reemplaza el valor del tablero por un 0
 	end;
 end;
 
