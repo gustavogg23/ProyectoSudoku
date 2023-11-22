@@ -1,8 +1,10 @@
 program Sudoku;
 
 uses crt;
+type
+	matriz = array [1..9, 1..9] of integer;
 var 
-	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: array [1..9, 1..9] of integer;
+	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: matriz;
 	i, j: integer;
 	
 procedure llenarTablerosResueltos;
@@ -419,13 +421,13 @@ begin
 	tableroRes5[9, 9]:= 9;
 end;
 
-procedure crearPistas; // Procedimiento que crea las pistas mostradas al usuario
+procedure crearPistas( var arr: matriz); // Procedimiento que crea las pistas mostradas al usuario
 var
 	i, j, k: integer;
 begin
 	for i:= 1 to 9 do  // Bucle anidado que copia los valores del tablero resuleto al tablero del usuario
 		for j:= 1 to 9 do
-			tableroUsuario[i, j]:= tableroRes[i, j];
+			tableroUsuario[i, j]:= arr[i, j];
 			
 	for k:= 1 to 64 do  // Bucle que se repite 64 veces
 	begin
@@ -435,6 +437,35 @@ begin
 		until (tableroUsuario[i, j] <> 0); // Sigue repitiendo este proceso hasta que no queden celdas sin 0
 		tableroUsuario[i, j]:= 0; // Reemplaza el valor del tablero por un 0
 	end;
+end;
+
+procedure imprimirTableroUsuario(var arr: matriz);
+var 
+	i, j: integer;
+begin
+	writeln('Mostrando tablero de juego...');
+		writeln();
+		writeln('-----------------------');
+		for i:= 1 to 9 do
+		begin
+			write('| ');
+			for j:= 1 to 9 do
+			begin
+				if (arr[i, j] = 0) then
+				begin
+					write('  ');
+				end
+				else
+				begin
+					write(arr[i, j], ' ');
+				end;
+				if (j mod 3 = 0) then
+					write('|');
+			end;
+			writeln();
+			if (i mod 3 = 0) then
+				writeln('-----------------------');
+		end;
 end;
 
 BEGIN
@@ -449,7 +480,7 @@ BEGIN
 			write('| ');
 			for j:= 1 to 9 do
 			begin
-				write(tableroRes[i, j], ' ');
+				write(tableroRes1[i, j], ' ');
 				if (j mod 3 = 0) then
 					write('|');
 			end;
@@ -457,6 +488,8 @@ BEGIN
 			if (i mod 3 = 0) then
 				writeln('-----------------------');
 		end;
+		crearPistas(tableroRes1);
+		imprimirTableroUsuario(tableroUsuario);
 		exit;
 	end;
 END.
