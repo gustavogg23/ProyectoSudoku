@@ -421,7 +421,7 @@ begin
 	tableroRes5[9, 9]:= 9;
 end;
 
-procedure crearPistas( var arr: matriz); // Procedimiento que crea las pistas mostradas al usuario
+procedure crearPistas(var arr: matriz); // Procedimiento que crea las pistas mostradas al usuario
 var
 	i, j, k: integer;
 begin
@@ -512,6 +512,28 @@ begin
 	until pedirPosicion;
 end;
 
+function pedirNumero: integer;
+var
+	nroError, num: integer;
+	entrada: string;
+begin
+	repeat
+		write('Ingrese el numero que desea colocar en esa posicion: ');
+		readln(entrada);
+		Val(entrada, num, nroError);
+		if (nroError <> 0) then
+		begin
+			writeln('Entrada in valida, por favor ingrese un numero valido.');
+			num:= -1;
+		end
+		else if (num < 1) and (num > 9) then
+		begin
+			write('El numero debe estar entre 1 y 9, por favor ingresa un numero valido.');
+			num:= -1;
+		end;
+	until (num <> -1);
+end;
+
 BEGIN
 	randomize;
 	while true do
@@ -524,7 +546,11 @@ BEGIN
 			crearPistas(tableroRes1);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
-			pedirPosicion;
+			if pedirPosicion then
+			begin;
+				tableroUsuario[fila, columna]:= pedirNumero;
+				imprimirTableroUsuario(tableroUsuario);
+			end;
 			exit;
 		end;
 		2: begin
@@ -532,7 +558,11 @@ BEGIN
 			crearPistas(tableroRes2);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
-			pedirPosicion;
+			if pedirPosicion then
+			begin;
+				tableroUsuario[fila, columna]:= pedirNumero;
+				imprimirTableroUsuario(tableroUsuario);
+			end;
 			exit;
 		end;
 		3: begin
@@ -540,7 +570,11 @@ BEGIN
 			crearPistas(tableroRes3);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
-			pedirPosicion;
+			if pedirPosicion then
+			begin;
+				tableroUsuario[fila, columna]:= pedirNumero;
+				imprimirTableroUsuario(tableroUsuario);
+			end;
 			exit;
 		end;
 		4: begin
@@ -548,7 +582,11 @@ BEGIN
 			crearPistas(tableroRes4);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
-			pedirPosicion;
+			if pedirPosicion then
+			begin;
+				tableroUsuario[fila, columna]:= pedirNumero;
+				imprimirTableroUsuario(tableroUsuario);
+			end;
 			exit;
 		end;
 		5: begin
@@ -556,11 +594,14 @@ BEGIN
 			crearPistas(tableroRes5);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
-			pedirPosicion;
+			if pedirPosicion then
+			begin;
+				tableroUsuario[fila, columna]:= pedirNumero;
+				imprimirTableroUsuario(tableroUsuario);
+			end;
 			exit;
 		end;
 		end;
-	end;
-	
+	end;	
 END.
 
