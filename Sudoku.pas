@@ -430,6 +430,7 @@ begin
 	for i:= 1 to 9 do  // Bucle anidado que copia los valores del tablero resuleto al tablero del usuario
 		for j:= 1 to 9 do
 			tableroUsuario[i, j]:= arr[i, j];
+			tableroPistas[i, j]:= true; // Establece las posiciones en cada fila y columna como pistas
 			
 	for k:= 1 to 64 do  // Bucle que se repite 64 veces
 	begin
@@ -438,6 +439,7 @@ begin
 			j:= random(9) + 1; // Selecciona una columan aleatoria 
 		until (tableroUsuario[i, j] <> 0); // Sigue repitiendo este proceso hasta que no queden celdas sin 0
 		tableroUsuario[i, j]:= 0; // Reemplaza el valor del tablero por un 0
+		tableroPistas[i, j]:= false; // Las posiciones reemplazadas por un 0 dejan de estar establecidas como pistas
 	end;
 end;
 
@@ -505,7 +507,7 @@ begin
 		end;
 		if ((fil >= 1) and (fil <= 9)) and ((col >= 1) and (col <= 9)) then
 		begin
-			if (tableroUsuario[fil, col] <> 0) then
+			if (tableroPistas[fil, col]) then
 			begin
 				writeln('La posicion ingresada ya contiene una pista y no puede ser modificada, por favor ingrese una posicion diferentes.');
 				pedirPosicion:= false;
