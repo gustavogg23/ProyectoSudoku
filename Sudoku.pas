@@ -3,8 +3,10 @@ program Sudoku;
 uses crt;
 type
 	matriz = array [1..9, 1..9] of integer;
+	matrizBoolean = array [1..9, 1..9] of boolean;
 var 
 	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: matriz;
+	tableroPistas: matrizBoolean;
 	i, j, fila, columna, elegirTablero, num: integer;
 	
 procedure llenarTablerosResueltos;
@@ -465,7 +467,7 @@ begin
 					end
 					else
 					begin
-						TextColor(Green);
+						TextColor(Blue);
 						write(arr[i, j], ' ');
 						TextColor(White);
 					end;
@@ -560,14 +562,9 @@ begin
 				write('| ');
 				for j:= 1 to 9 do
 				begin
-					if (tabRes[i, j] = 0) then
-					begin
-						write('  ');
-					end
-					else
-					begin
-						write(tabRes[i, j], ' ');
-					end;
+					TextColor(Blue);
+					write(tabRes[i, j], ' ');
+					TextColor(White);
 					if (j mod 3 = 0) then
 						write('|');
 				end;
