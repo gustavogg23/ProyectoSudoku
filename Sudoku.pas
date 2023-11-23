@@ -8,6 +8,7 @@ var
 	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: matriz;
 	tableroPistas: matrizBoolean;
 	i, j, fila, columna, elegirTablero, num: integer;
+	nombre: string;
 	
 procedure llenarTablerosResueltos;
 begin
@@ -431,7 +432,7 @@ begin
 		for j:= 1 to 9 do
 		begin
 			tableroUsuario[i, j]:= arr[i, j];
-			tableroPistas[i, j]:= true;
+			tableroPistas[i, j]:= true; // Establece las posiciones en cada fila y columna como pista
 		end;
 			
 	for k:= 1 to 64 do  // Bucle que se repite 64 veces
@@ -450,7 +451,7 @@ var
 	i, j: integer;
 begin
 	writeln('SUDOKU');
-	writeln();
+	writeln('    ');
 	writeln('-----------------------');
 	for i:= 1 to 9 do
 	begin
@@ -471,7 +472,7 @@ begin
 				end
 				else
 				begin
-					TextColor(Blue);
+					TextColor(Green);
 					write(arr[i, j], ' ');
 					TextColor(White);
 				end;
@@ -479,10 +480,35 @@ begin
 			if (j mod 3 = 0) then
 				write('|');
 		end;
+		write(' F', i);
 		writeln();
 		if (i mod 3 = 0) then
 			writeln('-----------------------');
 	end;
+end;
+
+procedure pedirNombre;
+var
+	contNombre: integer;
+	nombreValido: boolean;
+begin
+	repeat
+		write('Por favor ingrese su nombre: ');
+		readln(nombre);
+		nombreValido:= True; 
+		for contNombre:= 1 to length(nombre) do // Bucle que pasa por cada caracter de la variable nombre
+		begin
+			if not (nombre[contNombre] in ['A'..'Z', 'a'..'z', ' ']) then // Verifica que el nombre solo tiene letras y espacios
+			begin
+				nombreValido:= False; // En caso de que no se cumpla la condición, la variable se le asigan el valor False
+				break;                 
+			end;
+		end;
+		if not nombreValido then
+		begin
+			writeln('Nombre invalido.'); // Imprime un mensaje de error si la variable tiene el valor False
+		end;
+	until nombreValido;
 end;
 
 function pedirPosicion: boolean;
@@ -559,12 +585,13 @@ begin
 				write('| ');
 				for j:= 1 to 9 do
 				begin
-					TextColor(Blue);
+					TextColor(Green);
 					write(tabRes[i, j], ' ');
 					TextColor(White);
 					if (j mod 3 = 0) then
 						write('|');
 				end;
+				write(' F', i);
 				writeln();
 				if (i mod 3 = 0) then
 					writeln('-----------------------');
@@ -604,7 +631,7 @@ begin
 				end;
 		end;
 	end;
-	writeln('Felicitaciones! Has logrado completar el Sudoku!');
+	writeln('Felicitaciones ', nombre, '! Has logrado completar el Sudoku!');
 	juegoTerminado:= true;
 end;
 
@@ -614,6 +641,7 @@ BEGIN
 	begin
 		llenarTablerosResueltos;
 		elegirTablero:= random(5) + 1;
+		pedirNombre;
 		case elegirTablero of
 		1: begin
 			Clrscr;
