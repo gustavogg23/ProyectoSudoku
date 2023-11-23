@@ -4,7 +4,7 @@ uses crt;
 type
 	matriz = array [1..9, 1..9] of integer;
 var 
-	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario, tableroComparar: matriz;
+	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: matriz;
 	i, j, fila, columna, elegirTablero, num: integer;
 	
 procedure llenarTablerosResueltos;
@@ -421,15 +421,6 @@ begin
 	tableroRes5[9, 9]:= 9;
 end;
 
-procedure almacenarTablero(var tab: matriz);
-var
-	i, j: integer;
-begin
-	for i:= 1 to 9 do
-		for j:= 1 to 9 do
-			tableroComparar[i, j]:= tab[i, j];
-end;
-
 procedure crearPistas(var arr: matriz); // Procedimiento que crea las pistas mostradas al usuario
 var
 	i, j, k: integer;
@@ -448,7 +439,7 @@ begin
 	end;
 end;
 
-procedure imprimirTableroUsuario(var arr: matriz);
+procedure imprimirTableroUsuario(var arr, tabResuelto: matriz);
 var 
 	i, j: integer;
 begin
@@ -466,7 +457,16 @@ begin
 				end
 				else
 				begin
-					write(arr[i, j], ' ');
+					if (arr[i, j] <> tabResuelto[i, j]) then
+					begin
+						TextColor(Red);
+						write(arr[i, j], ' ');
+						TextColor(White);
+					end
+					else
+					begin
+						write(arr[i, j], ' ');
+					end;
 				end;
 				if (j mod 3 = 0) then
 					write('|');
@@ -549,7 +549,7 @@ begin
 		else if (entrada = 'RENDIRSE') then
 		begin
 			writeln('Has decidido rendirte');
-			writeln('Presiona enter para ver la solución del Sudoku');
+			writeln('Presiona enter para ver la solucion del Sudoku');
 			readln();
 			Clrscr;
 			writeln('-----------------------');
@@ -576,7 +576,7 @@ begin
 			writeln();
 			writeln('Presiona enter para salir...');
 			readln();
-			exit;
+			Halt;
 		end;
 		Val(entrada, num, nroError);
 		if (nroError <> 0) then
@@ -621,80 +621,75 @@ BEGIN
 		case elegirTablero of
 		1: begin
 			Clrscr;
-			almacenarTablero(tableroRes1);
 			crearPistas(tableroRes1);
 			repeat
-				imprimirTableroUsuario(tableroUsuario);
+				imprimirTableroUsuario(tableroUsuario, tableroRes1);
 				writeln();
 				if pedirPosicion then
 				begin
 					tableroUsuario[fila, columna]:= pedirNumero(tableroRes1);
 					Clrscr;
-					imprimirTableroUsuario(tableroUsuario);
+					imprimirTableroUsuario(tableroUsuario, tableroRes1);
 				end;
 			until juegoTerminado(tableroRes1);
 			exit;
 		end;
 		2: begin
 			Clrscr;
-			almacenarTablero(tableroRes2);
 			crearPistas(tableroRes2);
 			repeat
-				imprimirTableroUsuario(tableroUsuario);
+				imprimirTableroUsuario(tableroUsuario, tableroRes2);
 				writeln();
 				if pedirPosicion then
 				begin
 					tableroUsuario[fila, columna]:= pedirNumero(tableroRes2);
 					Clrscr;
-					imprimirTableroUsuario(tableroUsuario);
+					imprimirTableroUsuario(tableroUsuario, tableroRes2);
 				end;
 			until juegoTerminado(tableroRes2);
 			exit;
 		end;
 		3: begin
 			Clrscr;
-			almacenarTablero(tableroRes3);
 			crearPistas(tableroRes3);
 			repeat
-				imprimirTableroUsuario(tableroUsuario);
+				imprimirTableroUsuario(tableroUsuario, tableroRes3);
 				writeln();
 				if pedirPosicion then
 				begin
 					tableroUsuario[fila, columna]:= pedirNumero(tableroRes3);
 					Clrscr;
-					imprimirTableroUsuario(tableroUsuario);
+					imprimirTableroUsuario(tableroUsuario, tableroRes3);
 				end;
 			until juegoTerminado(tableroRes3);
 			exit;
 		end;
 		4: begin
 			Clrscr;
-			almacenarTablero(tableroRes4);
 			crearPistas(tableroRes4);
 			repeat
-				imprimirTableroUsuario(tableroUsuario);
+				imprimirTableroUsuario(tableroUsuario, tableroRes4);
 				writeln();
 				if pedirPosicion then
 				begin
 					tableroUsuario[fila, columna]:= pedirNumero(tableroRes4);
 					Clrscr;
-					imprimirTableroUsuario(tableroUsuario);
+					imprimirTableroUsuario(tableroUsuario, tableroRes4);
 				end;
 			until juegoTerminado(tableroRes4);
 			exit;
 		end;
 		5: begin
 			Clrscr;
-			almacenarTablero(tableroRes5);
 			crearPistas(tableroRes5);
 			repeat
-				imprimirTableroUsuario(tableroUsuario);
+				imprimirTableroUsuario(tableroUsuario, tableroRes5);
 				writeln();
 				if pedirPosicion then
 				begin
 					tableroUsuario[fila, columna]:= pedirNumero(tableroRes5);
 					Clrscr;
-					imprimirTableroUsuario(tableroUsuario);
+					imprimirTableroUsuario(tableroUsuario, tableroRes5);
 				end;
 			until juegoTerminado(tableroRes5);
 			exit;
