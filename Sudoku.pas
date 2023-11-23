@@ -517,6 +517,7 @@ var
 	nroError, num: integer;
 	entrada: string;
 begin
+	num:= -1;
 	repeat
 		write('Ingrese el numero que desea colocar en esa posicion: ');
 		readln(entrada);
@@ -532,6 +533,7 @@ begin
 			num:= -1;
 		end;
 	until (num <> -1);
+	pedirNumero:= num;
 end;
 
 BEGIN
