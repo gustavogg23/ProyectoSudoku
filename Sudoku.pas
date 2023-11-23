@@ -465,7 +465,9 @@ begin
 					end
 					else
 					begin
+						TextColor(Green);
 						write(arr[i, j], ' ');
+						TextColor(White);
 					end;
 				end;
 				if (j mod 3 = 0) then
@@ -623,6 +625,7 @@ BEGIN
 			Clrscr;
 			crearPistas(tableroRes1);
 			repeat
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario, tableroRes1);
 				writeln();
 				if pedirPosicion then
@@ -638,6 +641,7 @@ BEGIN
 			Clrscr;
 			crearPistas(tableroRes2);
 			repeat
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario, tableroRes2);
 				writeln();
 				if pedirPosicion then
@@ -653,6 +657,7 @@ BEGIN
 			Clrscr;
 			crearPistas(tableroRes3);
 			repeat
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario, tableroRes3);
 				writeln();
 				if pedirPosicion then
@@ -668,6 +673,7 @@ BEGIN
 			Clrscr;
 			crearPistas(tableroRes4);
 			repeat
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario, tableroRes4);
 				writeln();
 				if pedirPosicion then
@@ -683,6 +689,7 @@ BEGIN
 			Clrscr;
 			crearPistas(tableroRes5);
 			repeat
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario, tableroRes5);
 				writeln();
 				if pedirPosicion then
