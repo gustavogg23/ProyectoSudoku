@@ -5,7 +5,7 @@ type
 	matriz = array [1..9, 1..9] of integer;
 var 
 	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario, tableroComparar: matriz;
-	i, j, fila, columna, elegirTablero: integer;
+	i, j, fila, columna, elegirTablero, num: integer;
 	
 procedure llenarTablerosResueltos;
 begin
@@ -523,7 +523,7 @@ end;
 
 function pedirNumero: integer;
 var
-	nroError, num: integer;
+	nroError: integer;
 	entrada: string;
 begin
 	num:= -1;
@@ -545,6 +545,65 @@ begin
 	pedirNumero:= num;
 end;
 
+procedure rendirse(var tabRes: matriz);
+var
+	i, j, contLetras: integer;
+	opcion: string;
+	opcValida: boolean;
+begin
+	repeat
+		write('Desea continuar o rendirse: ');
+		readln(opcion);
+		for i:= 1 to length(opcion) do
+			opcion[i]:= UpCase(opcion[i]);
+		opcValida:= true;
+		for contLetras:= 1 to length(opcion) do
+		begin
+			if not (opcion[contLetras] in ['A'..'Z']) then
+			begin
+				opcValida:= false;
+				break;
+			end;
+		end;
+		if not opcValida or (opcion <> 'CONTINUAR') and (opcion <> 'RENDIRSE') then
+		begin
+			writeln('La opcion que ha ingresado no es valida.');
+		end
+		else if (opcion = 'RENDIRSE') then
+		begin
+			writeln('Has decidido rendirte');
+			writeln('Presiona enter para ver la solución del Sudoku');
+			readln();
+			Clrscr;
+			writeln('-----------------------');
+			for i:= 1 to 9 do
+			begin
+				write('| ');
+				for j:= 1 to 9 do
+				begin
+					if (tabRes[i, j] = 0) then
+					begin
+						write('  ');
+					end
+					else
+					begin
+						write(tabRes[i, j], ' ');
+					end;
+					if (j mod 3 = 0) then
+						write('|');
+				end;
+				writeln();
+				if (i mod 3 = 0) then
+					writeln('-----------------------');
+			end;
+			writeln();
+			writeln('Presiona enter para salir...');
+			readln();
+			exit;
+		end;
+	until (opcion = 'CONTINUAR') or (opcion = 'RENDIRSE');
+end;
+
 BEGIN
 	randomize;
 	while true do
@@ -563,6 +622,7 @@ BEGIN
 				tableroUsuario[fila, columna]:= pedirNumero;
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
+				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
@@ -577,6 +637,7 @@ BEGIN
 				tableroUsuario[fila, columna]:= pedirNumero;
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
+				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
@@ -591,6 +652,7 @@ BEGIN
 				tableroUsuario[fila, columna]:= pedirNumero;
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
+				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
@@ -605,6 +667,7 @@ BEGIN
 				tableroUsuario[fila, columna]:= pedirNumero;
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
+				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
@@ -619,6 +682,7 @@ BEGIN
 				tableroUsuario[fila, columna]:= pedirNumero;
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
+				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
