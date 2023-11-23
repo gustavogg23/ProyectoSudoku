@@ -429,8 +429,10 @@ var
 begin
 	for i:= 1 to 9 do  // Bucle anidado que copia los valores del tablero resuleto al tablero del usuario
 		for j:= 1 to 9 do
+		begin
 			tableroUsuario[i, j]:= arr[i, j];
-			tableroPistas[i, j]:= true; // Establece las posiciones en cada fila y columna como pistas
+			tableroPistas[i, j]:= true;
+		end;
 			
 	for k:= 1 to 64 do  // Bucle que se repite 64 veces
 	begin
@@ -447,40 +449,40 @@ procedure imprimirTableroUsuario(var arr, tabResuelto: matriz);
 var 
 	i, j: integer;
 begin
-	writeln('Mostrando tablero de juego...');
-		writeln();
-		writeln('-----------------------');
-		for i:= 1 to 9 do
+	writeln('SUDOKU');
+	writeln();
+	writeln('-----------------------');
+	for i:= 1 to 9 do
+	begin
+		write('| ');
+		for j:= 1 to 9 do
 		begin
-			write('| ');
-			for j:= 1 to 9 do
+			if (arr[i, j] = 0) then
 			begin
-				if (arr[i, j] = 0) then
+				write('  ');
+			end
+			else
+			begin
+				if (arr[i, j] <> tabResuelto[i, j]) then
 				begin
-					write('  ');
+					TextColor(Red);
+					write(arr[i, j], ' ');
+					TextColor(White);
 				end
 				else
 				begin
-					if (arr[i, j] <> tabResuelto[i, j]) then
-					begin
-						TextColor(Red);
-						write(arr[i, j], ' ');
-						TextColor(White);
-					end
-					else
-					begin
-						TextColor(Blue);
-						write(arr[i, j], ' ');
-						TextColor(White);
-					end;
+					TextColor(Blue);
+					write(arr[i, j], ' ');
+					TextColor(White);
 				end;
-				if (j mod 3 = 0) then
-					write('|');
 			end;
-			writeln();
-			if (i mod 3 = 0) then
-				writeln('-----------------------');
+			if (j mod 3 = 0) then
+				write('|');
 		end;
+		writeln();
+		if (i mod 3 = 0) then
+			writeln('-----------------------');
+	end;
 end;
 
 function pedirPosicion: boolean;
@@ -492,39 +494,32 @@ begin
 		write('Por favor ingrese la fila (1-9): ');
 		readln(nroEntrada);
 		Val(nroEntrada, fil, error);
-		if (error <> 0) then
+		if (error <> 0) or (fil < 1) or (fil > 9) then
 		begin
 			writeln('Entrada invalida, por favor ingrese un numero valido.');
-			pedirPosicion:= false;
 		end;
+	until (error = 0) and (fil >= 1) and (fil <= 9);
+	repeat
 		write('Por favor ingrese la columna (1-9): ');
 		readln(nroEntrada);
 		Val(nroEntrada, col, error);
-		if (error <> 0) then
+		if (error <> 0) or (col < 1) or (col > 9) then
 		begin
 			writeln('Entrada invalida, por favor ingrese un numero valido.');
-			pedirPosicion:= false;
 		end;
-		if ((fil >= 1) and (fil <= 9)) and ((col >= 1) and (col <= 9)) then
-		begin
-			if (tableroPistas[fil, col]) then
-			begin
-				writeln('La posicion ingresada ya contiene una pista y no puede ser modificada, por favor ingrese una posicion diferentes.');
-				pedirPosicion:= false;
-			end
-			else
-			begin
-				fila:= fil;
-				columna:= col;
-				pedirPosicion:= true;
-			end;
-		end
-		else
-		begin
-			writeln('La fila y la columna ingresada debe estar entre 1 y 9, por favor ingrese una opcion valida.');
-			pedirPosicion:= false;
-		end;	
-	until pedirPosicion;
+	until (error = 0) and (col >= 1) and (col <= 9);
+	if (tableroPistas[fil, col]) then
+	begin
+		writeln('La posicion ingresada ya contiene una pista y no puede ser modificada, por favor ingrese una posicion diferentes.');
+		pedirPosicion:= false;
+		readln();
+	end
+	else
+	begin
+		fila:= fil;
+		columna:= col;
+		pedirPosicion:= true;
+	end;
 end;
 
 function pedirNumero(var tabRes: matriz): integer;
