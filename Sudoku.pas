@@ -4,7 +4,7 @@ uses crt;
 type
 	matriz = array [1..9, 1..9] of integer;
 var 
-	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: matriz;
+	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario, tableroComparar: matriz;
 	i, j, fila, columna, elegirTablero: integer;
 	
 procedure llenarTablerosResueltos;
@@ -421,6 +421,15 @@ begin
 	tableroRes5[9, 9]:= 9;
 end;
 
+procedure almacenarTablero(var tab: matriz);
+var
+	i, j: integer;
+begin
+	for i:= 1 to 9 do
+		for j:= 1 to 9 do
+			tableroComparar[i, j]:= tab[i, j];
+end;
+
 procedure crearPistas(var arr: matriz); // Procedimiento que crea las pistas mostradas al usuario
 var
 	i, j, k: integer;
@@ -524,7 +533,7 @@ begin
 		Val(entrada, num, nroError);
 		if (nroError <> 0) then
 		begin
-			writeln('Entrada in valida, por favor ingrese un numero valido.');
+			writeln('Entrada invalida, por favor ingrese un numero valido.');
 			num:= -1;
 		end
 		else if (num < 1) and (num > 9) then
@@ -545,60 +554,70 @@ BEGIN
 		case elegirTablero of
 		1: begin
 			Clrscr;
+			almacenarTablero(tableroRes1);
 			crearPistas(tableroRes1);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
 			if pedirPosicion then
 			begin;
 				tableroUsuario[fila, columna]:= pedirNumero;
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
 			end;
 			exit;
 		end;
 		2: begin
 			Clrscr;
+			almacenarTablero(tableroRes2);
 			crearPistas(tableroRes2);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
 			if pedirPosicion then
 			begin;
 				tableroUsuario[fila, columna]:= pedirNumero;
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
 			end;
 			exit;
 		end;
 		3: begin
 			Clrscr;
+			almacenarTablero(tableroRes3);
 			crearPistas(tableroRes3);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
 			if pedirPosicion then
 			begin;
 				tableroUsuario[fila, columna]:= pedirNumero;
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
 			end;
 			exit;
 		end;
 		4: begin
 			Clrscr;
+			almacenarTablero(tableroRes4);
 			crearPistas(tableroRes4);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
 			if pedirPosicion then
 			begin;
 				tableroUsuario[fila, columna]:= pedirNumero;
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
 			end;
 			exit;
 		end;
 		5: begin
 			Clrscr;
+			almacenarTablero(tableroRes5);
 			crearPistas(tableroRes5);
 			imprimirTableroUsuario(tableroUsuario);
 			writeln();
 			if pedirPosicion then
 			begin;
 				tableroUsuario[fila, columna]:= pedirNumero;
+				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
 			end;
 			exit;
