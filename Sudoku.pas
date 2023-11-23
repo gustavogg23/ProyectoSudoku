@@ -521,55 +521,32 @@ begin
 	until pedirPosicion;
 end;
 
-function pedirNumero: integer;
+function pedirNumero(var tabRes: matriz): integer;
 var
-	nroError: integer;
+	nroError, contLetras: integer;
 	entrada: string;
+	opcValida: boolean;
 begin
 	num:= -1;
 	repeat
-		write('Ingrese el numero que desea colocar en esa posicion: ');
+		write('Ingrese el numero que desea colocar en esa posicion (escriba "rendirse" para abandonar la partida): ');
 		readln(entrada);
-		Val(entrada, num, nroError);
-		if (nroError <> 0) then
-		begin
-			writeln('Entrada invalida, por favor ingrese un numero valido.');
-			num:= -1;
-		end
-		else if (num < 1) and (num > 9) then
-		begin
-			write('El numero debe estar entre 1 y 9, por favor ingresa un numero valido.');
-			num:= -1;
-		end;
-	until (num <> -1);
-	pedirNumero:= num;
-end;
-
-procedure rendirse(var tabRes: matriz);
-var
-	i, j, contLetras: integer;
-	opcion: string;
-	opcValida: boolean;
-begin
-	repeat
-		write('Desea continuar o rendirse: ');
-		readln(opcion);
-		for i:= 1 to length(opcion) do
-			opcion[i]:= UpCase(opcion[i]);
+		for i:= 1 to length(entrada) do
+			entrada[i]:= UpCase(entrada[i]);
 		opcValida:= true;
-		for contLetras:= 1 to length(opcion) do
+		for contLetras:= 1 to length(entrada) do
 		begin
-			if not (opcion[contLetras] in ['A'..'Z']) then
+			if not (entrada[contLetras] in ['A'..'Z']) then
 			begin
 				opcValida:= false;
 				break;
 			end;
 		end;
-		if not opcValida or (opcion <> 'CONTINUAR') and (opcion <> 'RENDIRSE') then
+		if not opcValida or (entrada <> 'RENDIRSE') then
 		begin
-			writeln('La opcion que ha ingresado no es valida.');
+			writeln('Opcion invalida');
 		end
-		else if (opcion = 'RENDIRSE') then
+		else if (entrada = 'RENDIRSE') then
 		begin
 			writeln('Has decidido rendirte');
 			writeln('Presiona enter para ver la solución del Sudoku');
@@ -601,7 +578,19 @@ begin
 			readln();
 			exit;
 		end;
-	until (opcion = 'CONTINUAR') or (opcion = 'RENDIRSE');
+		Val(entrada, num, nroError);
+		if (nroError <> 0) then
+		begin
+			writeln('Entrada invalida, por favor ingrese un numero valido.');
+			num:= -1;
+		end
+		else if (num < 1) and (num > 9) then
+		begin
+			write('El numero debe estar entre 1 y 9, por favor ingresa un numero valido.');
+			num:= -1;
+		end;
+	until (num <> -1) or (entrada = 'RENDIRSE');
+	pedirNumero:= num;
 end;
 
 BEGIN
@@ -619,10 +608,9 @@ BEGIN
 			writeln();
 			if pedirPosicion then
 			begin;
-				tableroUsuario[fila, columna]:= pedirNumero;
+				tableroUsuario[fila, columna]:= pedirNumero(tableroRes1);
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
-				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
@@ -634,10 +622,9 @@ BEGIN
 			writeln();
 			if pedirPosicion then
 			begin;
-				tableroUsuario[fila, columna]:= pedirNumero;
+				tableroUsuario[fila, columna]:= pedirNumero(tableroRes2);
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
-				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
@@ -649,10 +636,9 @@ BEGIN
 			writeln();
 			if pedirPosicion then
 			begin;
-				tableroUsuario[fila, columna]:= pedirNumero;
+				tableroUsuario[fila, columna]:= pedirNumero(tableroRes3);
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
-				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
@@ -664,10 +650,9 @@ BEGIN
 			writeln();
 			if pedirPosicion then
 			begin;
-				tableroUsuario[fila, columna]:= pedirNumero;
+				tableroUsuario[fila, columna]:= pedirNumero(tableroRes4);
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
-				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
@@ -679,10 +664,9 @@ BEGIN
 			writeln();
 			if pedirPosicion then
 			begin;
-				tableroUsuario[fila, columna]:= pedirNumero;
+				tableroUsuario[fila, columna]:= pedirNumero(tableroRes5);
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario);
-				rendirse(tableroRes1);
 			end;
 			exit;
 		end;
