@@ -486,7 +486,7 @@ procedure imprimirTableroUsuario(var arr, tabResuelto: matriz); // procedimiento
 var 
 	i, j: integer;
 begin
-	writeln('SUDOKU');
+	writeln('--------SUDOKU--------');
 	writeln('    ');
 	writeln('  -----------------------');
 	for i:= 1 to 9 do
@@ -610,11 +610,12 @@ begin
 		end
 		else if (entrada = 'RENDIRSE') then // En caso de rendirse imprime el tablero con todos los números en su lugar correcto
 		begin
+			writeln();
 			writeln('Has decidido rendirte');
 			writeln('Presiona enter para ver la solucion del Sudoku');
 			readln();
 			Clrscr;
-			writeln('-----------------------');
+			writeln('  -----------------------');
 			for i:= 1 to 9 do
 			begin
 				write('F', i, '| ');
@@ -628,7 +629,7 @@ begin
 				end;
 				writeln();
 				if (i mod 3 = 0) then
-					writeln('-----------------------');
+					writeln('  -----------------------');
 			end;
 			writeln();
 			writeln('Presiona enter para salir...');
@@ -674,8 +675,8 @@ BEGIN // Bloque principal del programa
 	begin
 		instrucciones;
 		pedirNombre;
-		randomize;
 		llenarTablerosResueltos;
+		randomize;
 		elegirTablero:= random(5) + 1; // Aquí se elige al azar uno de los 5 tableros completos que será el qu el usuario tendrá que completar
 		case elegirTablero of
 		1: begin
