@@ -10,6 +10,42 @@ var
 	i, j, fila, columna, elegirTablero, num: integer;
 	nombre: string;
 	
+procedure instrucciones;
+begin
+	writeln('-----------------------------------------------------------------------------------------------------------------------');
+	writeln();
+	writeln('----------------------------------------------Bienvenido al Sudoku!----------------------------------------------------');
+	writeln();
+	writeln('-----------------------------------------------------------------------------------------------------------------------');
+	writeln();
+	writeln('Las reglas son las siguientes:');
+	writeln();
+	writeln('- Al iniciar el juego el tablero tendrá 17 pistas que seran de ayuda para completar el Sudoku');
+	writeln();
+	writeln('- Debera ingresar la fila y la columna donde quiera ingresar un numero');
+	writeln();
+	writeln('- Tanto la fila como la columna debe ser un numero entre el 1 y el 9');
+	writeln();
+	writeln('- No esta permitido ingresar un numero donde ya exista un pista, las pistas no se pueden modificar');
+	writeln();
+	writeln('- Una vez elegida la posicion donde desea poner un numero, podra ingresar el numero que quiera entre el 1 y 9');
+	writeln();
+	writeln('- Si el numero ingresado en la posicion es incorrecto se vera en rojo, de lo contrario se vera en verde');
+	writeln();
+	writeln('- Tendra la opcion de rendirse y ver la solucion del Sudoku en cada turno');
+	writeln();
+	writeln('- El juego acabara cuando complete el Sudoku correctamente o se rinda');
+
+	writeln();
+	writeln('-----------------------------------------------------------------------------------------------------------------------');
+	writeln();
+	writeln('Ahora es tiempo de jugar! Exito!');
+	writeln();
+	writeln('Presione enter para continuar...');
+	readln();
+	Clrscr;
+end;
+	
 procedure llenarTablerosResueltos;
 begin
 	// Tablero Resuelto 1
@@ -452,10 +488,10 @@ var
 begin
 	writeln('SUDOKU');
 	writeln('    ');
-	writeln('-----------------------');
+	writeln('  -----------------------');
 	for i:= 1 to 9 do
 	begin
-		write('| ');
+		write('F', i, '| ');
 		for j:= 1 to 9 do
 		begin
 			if (arr[i, j] = 0) then
@@ -480,10 +516,9 @@ begin
 			if (j mod 3 = 0) then
 				write('|');
 		end;
-		write(' F', i);
 		writeln();
 		if (i mod 3 = 0) then
-			writeln('-----------------------');
+			writeln('  -----------------------');
 	end;
 end;
 
@@ -493,12 +528,12 @@ var
 	nombreValido: boolean;
 begin
 	repeat
-		write('Por favor ingrese su nombre: ');
+		write('Por favor ingrese su nombre de usuario: ');
 		readln(nombre);
 		nombreValido:= True; 
 		for contNombre:= 1 to length(nombre) do // Bucle que pasa por cada caracter de la variable nombre
 		begin
-			if not (nombre[contNombre] in ['A'..'Z', 'a'..'z', ' ']) then // Verifica que el nombre solo tiene letras y espacios
+			if not (nombre[contNombre] in ['A'..'Z', 'a'..'z', '1'..'9']) then // Verifica que el nombre solo tiene letras y espacios
 			begin
 				nombreValido:= False; // En caso de que no se cumpla la condición, la variable se le asigan el valor False
 				break;                 
@@ -636,12 +671,13 @@ begin
 end;
 
 BEGIN
-	randomize;
 	while true do
 	begin
+		instrucciones;
+		pedirNombre;
+		randomize;
 		llenarTablerosResueltos;
 		elegirTablero:= random(5) + 1;
-		pedirNombre;
 		case elegirTablero of
 		1: begin
 			Clrscr;
