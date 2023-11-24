@@ -2,15 +2,15 @@ program Sudoku;
 
 uses crt;
 type
-	matriz = array [1..9, 1..9] of integer;
-	matrizBoolean = array [1..9, 1..9] of boolean;
+	matriz = array [1..9, 1..9] of integer;  // Tipo de variable de arreglo bidimensional de entero
+	matrizBoolean = array [1..9, 1..9] of boolean; // Tipo de variable de arreglo bidimensional de tipo booleano
 var 
-	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: matriz;
-	tableroPistas: matrizBoolean;
+	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: matriz; // Variables de tipo matriz para almacenar los distintos tableros a utilizar
+	tableroPistas: matrizBoolean; // Variabel de tipo matriz de boolean
 	i, j, fila, columna, elegirTablero, num: integer;
 	nombre: string;
 	
-procedure instrucciones;
+procedure instrucciones; // Procedimiento que muestra las instrucciones del juego
 begin
 	writeln('-----------------------------------------------------------------------------------------------------------------------');
 	writeln();
@@ -46,7 +46,7 @@ begin
 	Clrscr;
 end;
 	
-procedure llenarTablerosResueltos;
+procedure llenarTablerosResueltos; // Procedimiento que llena 5 tablero con diferentes datos
 begin
 	// Tablero Resuelto 1
 	tableroRes1[1, 1]:= 7;
@@ -467,7 +467,7 @@ begin
 	for i:= 1 to 9 do  // Bucle anidado que copia los valores del tablero resuleto al tablero del usuario
 		for j:= 1 to 9 do
 		begin
-			tableroUsuario[i, j]:= arr[i, j];
+			tableroUsuario[i, j]:= arr[i, j]; // Copia los datos de un tablero resuelto al tablero en el que jugará el usuario
 			tableroPistas[i, j]:= true; // Establece las posiciones en cada fila y columna como pista
 		end;
 			
@@ -482,7 +482,7 @@ begin
 	end;
 end;
 
-procedure imprimirTableroUsuario(var arr, tabResuelto: matriz);
+procedure imprimirTableroUsuario(var arr, tabResuelto: matriz); // procedimiento que imprime el tablero del usuario
 var 
 	i, j: integer;
 begin
@@ -491,16 +491,16 @@ begin
 	writeln('  -----------------------');
 	for i:= 1 to 9 do
 	begin
-		write('F', i, '| ');
+		write('F', i, '| '); // Dentro del bucle se imprime al lado de cada fila el numero que le corresponde a dicha fila
 		for j:= 1 to 9 do
 		begin
-			if (arr[i, j] = 0) then
+			if (arr[i, j] = 0) then // Si el valor que corresponde a la posición es un cero se imprime un espacio vacío
 			begin
 				write('  ');
 			end
 			else
 			begin
-				if (arr[i, j] <> tabResuelto[i, j]) then
+				if (arr[i, j] <> tabResuelto[i, j]) then // Si el valor en esta posición en el tablero del usuario es diferente al valor en la misma posición en el tablero resuelto el número se muestra en rojo
 				begin
 					TextColor(Red);
 					write(arr[i, j], ' ');
@@ -508,21 +508,21 @@ begin
 				end
 				else
 				begin
-					TextColor(Green);
+					TextColor(Green); // Si el número es una pista o es un número correcto ingresado por el usaurio se imprime en color verde
 					write(arr[i, j], ' ');
 					TextColor(White);
 				end;
 			end;
-			if (j mod 3 = 0) then
+			if (j mod 3 = 0) then // Si el número de la columna es divisible entre 3 se imprime una línea vertical para separar los cuadrantes
 				write('|');
 		end;
 		writeln();
-		if (i mod 3 = 0) then
+		if (i mod 3 = 0) then // Si el número de la fila es divisible entre 3 se imprime una línea horizontal para dividir el tablero
 			writeln('  -----------------------');
 	end;
 end;
 
-procedure pedirNombre;
+procedure pedirNombre; // Procedimiento que pide y valida el nombre de usuario del jugador
 var
 	contNombre: integer;
 	nombreValido: boolean;
@@ -533,7 +533,7 @@ begin
 		nombreValido:= True; 
 		for contNombre:= 1 to length(nombre) do // Bucle que pasa por cada caracter de la variable nombre
 		begin
-			if not (nombre[contNombre] in ['A'..'Z', 'a'..'z', '1'..'9']) then // Verifica que el nombre solo tiene letras y espacios
+			if not (nombre[contNombre] in ['A'..'Z', 'a'..'z', '1'..'9']) then // Verifica que el nombre solo tiene letras y numeros
 			begin
 				nombreValido:= False; // En caso de que no se cumpla la condición, la variable se le asigan el valor False
 				break;                 
@@ -546,7 +546,7 @@ begin
 	until nombreValido;
 end;
 
-function pedirPosicion: boolean;
+function pedirPosicion: boolean; // Función que verifica que la posición que el usuario desea modificar es válida
 var
 	fil, col, error: integer;
 	nroEntrada: string;
@@ -554,12 +554,12 @@ begin
 	repeat
 		write('Por favor ingrese la fila (1-9): ');
 		readln(nroEntrada);
-		Val(nroEntrada, fil, error);
-		if (error <> 0) or (fil < 1) or (fil > 9) then
+		Val(nroEntrada, fil, error); // Intenta convertir la entrada del usuario a un número entero
+		if (error <> 0) or (fil < 1) or (fil > 9) then // Si la entrada no es un número entero o entre 1 y 9, se muestra un mensaje de error
 		begin
 			writeln('Entrada invalida, por favor ingrese un numero valido.');
 		end;
-	until (error = 0) and (fil >= 1) and (fil <= 9);
+	until (error = 0) and (fil >= 1) and (fil <= 9); // Se repite hasta que se ingrese un número válido
 	repeat
 		write('Por favor ingrese la columna (1-9): ');
 		readln(nroEntrada);
@@ -569,7 +569,7 @@ begin
 			writeln('Entrada invalida, por favor ingrese un numero valido.');
 		end;
 	until (error = 0) and (col >= 1) and (col <= 9);
-	if (tableroPistas[fil, col]) then
+	if (tableroPistas[fil, col]) then // En caso de que la posición ingresada por el usuario corresponda a la posición de una pista, se imrpime un mensaje de error
 	begin
 		writeln('La posicion ingresada ya contiene una pista y no puede ser modificada, por favor ingrese una posicion diferentes.');
 		pedirPosicion:= false;
@@ -583,7 +583,7 @@ begin
 	end;
 end;
 
-function pedirNumero(var tabRes: matriz): integer;
+function pedirNumero(var tabRes: matriz): integer; // Función que pide y valida el número que quiere ingresar el usuario en la posición seleccionada
 var
 	nroError, contLetras: integer;
 	entrada: string;
@@ -591,24 +591,24 @@ var
 begin
 	num:= -1;
 	repeat
-		write('Ingrese el numero que desea colocar en esa posicion (escriba "rendirse" para abandonar la partida): ');
+		write('Ingrese el numero que desea colocar en esa posicion (escriba "rendirse" para abandonar la partida): '); // Da la opción de rendirse y salir del juego
 		readln(entrada);
 		for i:= 1 to length(entrada) do
-			entrada[i]:= UpCase(entrada[i]);
+			entrada[i]:= UpCase(entrada[i]); // Convierte cada carcater de la entrada en mayúscula
 		opcValida:= true;
 		for contLetras:= 1 to length(entrada) do
 		begin
-			if not (entrada[contLetras] in ['A'..'Z']) then
+			if not (entrada[contLetras] in ['A'..'Z']) then // verifica que la entrada solo tenga letras en caso de querer rendirse
 			begin
 				opcValida:= false;
 				break;
 			end;
 		end;
-		if not opcValida or (entrada <> 'RENDIRSE') then
+		if not opcValida or (entrada <> 'RENDIRSE') then // Se repite hasta que ingrese la palabra correcta
 		begin
 			writeln('Opcion invalida');
 		end
-		else if (entrada = 'RENDIRSE') then
+		else if (entrada = 'RENDIRSE') then // En caso de rendirse imprime el tablero con todos los números en su lugar correcto
 		begin
 			writeln('Has decidido rendirte');
 			writeln('Presiona enter para ver la solucion del Sudoku');
@@ -617,7 +617,7 @@ begin
 			writeln('-----------------------');
 			for i:= 1 to 9 do
 			begin
-				write('| ');
+				write('F', i, '| ');
 				for j:= 1 to 9 do
 				begin
 					TextColor(Green);
@@ -626,7 +626,6 @@ begin
 					if (j mod 3 = 0) then
 						write('|');
 				end;
-				write(' F', i);
 				writeln();
 				if (i mod 3 = 0) then
 					writeln('-----------------------');
@@ -636,22 +635,22 @@ begin
 			readln();
 			Halt;
 		end;
-		Val(entrada, num, nroError);
+		Val(entrada, num, nroError); // Si la entrada no es rendirse, verifica que sea un número 
 		if (nroError <> 0) then
 		begin
 			writeln('Entrada invalida, por favor ingrese un numero valido.');
 			num:= -1;
 		end
-		else if (num < 1) and (num > 9) then
+		else if (num < 1) and (num > 9) then // Si el número ingresado no está entre 1 y 9 imprime un mnesaje de error
 		begin
 			write('El numero debe estar entre 1 y 9, por favor ingresa un numero valido.');
 			num:= -1;
 		end;
-	until (num <> -1) or (entrada = 'RENDIRSE');
+	until (num <> -1) or (entrada = 'RENDIRSE'); // Se repite el bucle hasta que el usuario escriba rendirse o un número entre 1 y 9
 	pedirNumero:= num;
 end;
 
-function juegoTerminado(var tabSol: matriz): boolean;
+function juegoTerminado(var tabSol: matriz): boolean; // Esta función verifica que el tablero del usuario sea igual al tablero resuelto
 var
 	i, j: integer;
 begin
@@ -659,7 +658,7 @@ begin
 	begin
 		for j:= 1 to 9 do
 			begin
-				if (tableroUsuario[i, j] <> tabsol[i, j]) then
+				if (tableroUsuario[i, j] <> tabsol[i, j]) then // Si algún número del tablero del usuario es diferente al tablero resuelto la función devuelve un valor false
 				begin
 					juegoTerminado:= false;
 					exit;
@@ -667,32 +666,32 @@ begin
 		end;
 	end;
 	writeln('Felicitaciones ', nombre, '! Has logrado completar el Sudoku!');
-	juegoTerminado:= true;
+	juegoTerminado:= true; // Si el tablero del usuario es igual al tablero resuelto, la función devuelve true
 end;
 
-BEGIN
+BEGIN // Bloque principal del programa
 	while true do
 	begin
 		instrucciones;
 		pedirNombre;
 		randomize;
 		llenarTablerosResueltos;
-		elegirTablero:= random(5) + 1;
+		elegirTablero:= random(5) + 1; // Aquí se elige al azar uno de los 5 tableros completos que será el qu el usuario tendrá que completar
 		case elegirTablero of
 		1: begin
 			Clrscr;
-			crearPistas(tableroRes1);
+			crearPistas(tableroRes1); // Se crean las pistas en posiciones al azar tomando valores del tablero resuelto que haya tocado
 			repeat
 				Clrscr;
 				imprimirTableroUsuario(tableroUsuario, tableroRes1);
 				writeln();
-				if pedirPosicion then
+				if pedirPosicion then // Pide la posición donde el jugador desea ingresar un número, si es válida el programa continua
 				begin
-					tableroUsuario[fila, columna]:= pedirNumero(tableroRes1);
+					tableroUsuario[fila, columna]:= pedirNumero(tableroRes1); // Pide el número que quiere ingresar el usuario en la posición seleccionada
 					Clrscr;
-					imprimirTableroUsuario(tableroUsuario, tableroRes1);
+					imprimirTableroUsuario(tableroUsuario, tableroRes1); // Vuelve a impimir el tablero del usuario con los números ingresado por el usuario
 				end;
-			until juegoTerminado(tableroRes1);
+			until juegoTerminado(tableroRes1); // Esto se repite hasta que el usuario complete el Sudoku
 			exit;
 		end;
 		2: begin
