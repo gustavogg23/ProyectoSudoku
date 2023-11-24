@@ -6,7 +6,7 @@ type
 	matrizBoolean = array [1..9, 1..9] of boolean; // Tipo de variable de arreglo bidimensional de tipo booleano
 var 
 	tableroRes1, tableroRes2, tableroRes3, tableroRes4, tableroRes5, tableroUsuario: matriz; // Variables de tipo matriz para almacenar los distintos tableros a utilizar
-	tableroPistas: matrizBoolean; // Variabel de tipo matriz de boolean
+	tableroPistas: matrizBoolean; // Variable de tipo matriz de boolean
 	i, j, fila, columna, elegirTablero, num: integer;
 	nombre: string;
 	
@@ -474,8 +474,8 @@ begin
 	for k:= 1 to 64 do  // Bucle que se repite 64 veces
 	begin
 		repeat
-			i:= random(9) + 1; // Selecciona una fila aleatoria 
-			j:= random(9) + 1; // Selecciona una columan aleatoria 
+			i:= random(9) + 1; // Selecciona una fila aleatoria para convertir el elemento en 0
+			j:= random(9) + 1; // Selecciona una columan aleatoria para convertir el elemento en 0
 		until (tableroUsuario[i, j] <> 0); // Sigue repitiendo este proceso hasta que no queden celdas sin 0
 		tableroUsuario[i, j]:= 0; // Reemplaza el valor del tablero por un 0
 		tableroPistas[i, j]:= false; // Las posiciones reemplazadas por un 0 dejan de estar establecidas como pistas
@@ -637,7 +637,7 @@ begin
 			Halt;
 		end;
 		Val(entrada, num, nroError); // Si la entrada no es rendirse, verifica que sea un número 
-		if (nroError <> 0) then
+		if (nroError <> 0) or (num < 1) or (num > 9) then
 		begin
 			writeln('Entrada invalida, por favor ingrese un numero valido.');
 			num:= -1;
@@ -675,6 +675,7 @@ BEGIN // Bloque principal del programa
 	begin
 		instrucciones;
 		pedirNombre;
+		Clrscr;
 		llenarTablerosResueltos;
 		randomize;
 		elegirTablero:= random(5) + 1; // Aquí se elige al azar uno de los 5 tableros completos que será el qu el usuario tendrá que completar
