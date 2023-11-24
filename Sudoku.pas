@@ -506,9 +506,15 @@ begin
 					write(arr[i, j], ' ');
 					TextColor(White);
 				end
+				else if (tableroPistas[i, j]) then
+				begin
+					TextColor(Green); // Si el número es una pista se imprime en color verde
+					write(arr[i, j], ' ');
+					TextColor(White);
+				end
 				else
 				begin
-					TextColor(Green); // Si el número es una pista o es un número correcto ingresado por el usaurio se imprime en color verde
+					TextColor(Blue); // Si el número ingresado por el usuario es correcto se imprime en color azul
 					write(arr[i, j], ' ');
 					TextColor(White);
 				end;
